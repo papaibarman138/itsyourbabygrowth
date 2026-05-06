@@ -5,7 +5,7 @@ import {
   getAgeDisplay, getAgeDecimal, predictAdultHeight, predictHealthyWeight,
   getCurrentBMI, getBMIStatus, getHeightPercentile, getWeightPercentile,
   forecastShortTerm, getNutritionSummary
-} from '../hooks/useGrowth'
+} from './useGrowth'
 
 export default function HealthDataPage() {
   const [children, setChildren] = useState([])
