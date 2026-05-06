@@ -2,9 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App'
 import './index.css'
-import { getAuthHeaders } from './lib/_headers'
-import { installHostBridge } from './lib/_host-bridge'
-
 // Error capture is now in index.html (regular <script>) so it runs
 // BEFORE ESM module linking — catching import/export errors that would
 // otherwise kill the module graph before any in-module code executes.
@@ -86,18 +83,8 @@ window.addEventListener('beforeinstallprompt', (e) => e.preventDefault())
 // Bridge share/clipboard requests to the host page when this app is embedded
 // in Whacka Explore. Chromium increasingly blocks these APIs inside sandboxed
 // cross-origin iframes even when the app is otherwise fully trusted.
-installHostBridge()
 
 // ── Record app session for analytics (skip preview/editor mode) ──
-;(() => {
-  const projectId = import.meta.env.VITE_PROJECT_ID
-  if (!projectId || import.meta.env.VITE_PREVIEW_TOKEN) return
-  const base = import.meta.env.VITE_API_BASE || ''
-  fetch(`${base}/api/app/${projectId}/session`, {
-    method: 'POST',
-    headers: getAuthHeaders({ 'Content-Type': 'application/json' }),
-  }).catch(() => {})
-})()
 
 // Register Service Worker (skip in iframe / preview mode)
 try {
