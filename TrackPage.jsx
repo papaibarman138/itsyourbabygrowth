@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
-import { db } from '../lib/db'
+import { db } from './db'
 import { Plus, ChevronRight, Sparkles, Ruler, Weight, Baby, Trash2, Info, X } from 'lucide-react'
 import {
   getAgeDisplay, getAgeDecimal, predictAdultHeight, predictHealthyWeight,
   getCurrentBMI, getBMIStatus, getHeightPercentile, getWeightPercentile
-} from '../hooks/useGrowth'
-import AddChildModal from '../components/AddChildModal'
-import ChildCard from '../components/ChildCard'
+} from './useGrowth'
+import AddChildModal from './AddChildModal'
+import ChildCard from './ChildCard'
 
 const HERO_IMG = 'https://api.whacka.app/storage/v1/object/public/app-images/projects/92e44335-0275-4f78-867a-53d164b5dc61/gen-a15acd51-1777205664717.png'
 const APP_LOGO = 'https://api.whacka.app/storage/v1/object/public/app-images/92e44335-0275-4f78-867a-53d164b5dc61/bc5b7753-0969-4763-b5ff-8adb7ecac4a4.jpeg'
