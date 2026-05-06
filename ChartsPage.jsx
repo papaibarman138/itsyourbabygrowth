@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { db } from '../lib/db'
+import { db } from './db'
 import { BarChart3, Ruler, Weight, AlertTriangle } from 'lucide-react'
-import { getAgeDecimal, getGrowthCurve, getWHOBands } from '../hooks/useGrowth'
+import { getAgeDecimal, getGrowthCurve, getWHOBands } from './useGrowth'
 
 export default function ChartsPage() {
   const [children, setChildren] = useState([])
