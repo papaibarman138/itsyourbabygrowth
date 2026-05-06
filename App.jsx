@@ -1,8 +1,8 @@
 import { HashRouter, Routes, Route, NavLink } from 'react-router-dom'
 import { Search, BarChart3, Activity } from 'lucide-react'
-import TrackPage from './pages/TrackPage'
-import ChartsPage from './pages/ChartsPage'
-import HealthDataPage from './pages/HealthDataPage'
+import TrackPage from './TrackPage'
+import ChartsPage from './ChartsPage'
+import HealthDataPage from './HealthDataPage'
 
 export default function App() {
   return (
