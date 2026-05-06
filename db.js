@@ -6,17 +6,18 @@
 
 import { createClient } from '@supabase/supabase-js'
 import { getAppUserId } from './user'
-import { getHeaders } from './_headers'
 
 const API_BASE = import.meta.env.VITE_API_BASE || ''
 const PROJECT_ID = import.meta.env.VITE_PROJECT_ID
 
 async function apiCall(action, params) {
-  const res = await fetch(`${API_BASE}/api/app/${PROJECT_ID}/data`, {
-    method: 'POST',
-    headers: getHeaders(),
-    body: JSON.stringify({ action, ...params }),
-  })
+ const res = await fetch(`${API_BASE}/api/app/${PROJECT_ID}/data`, {
+  method: 'POST',
+  headers: {
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({ action, ...params }),
+})
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({}))
