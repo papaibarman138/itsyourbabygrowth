@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react'
-import { db } from '../lib/db'
+import { db } from './db'
 import { Ruler, Weight, Sparkles, TrendingUp, Trash2, Edit3, Check, X, Star, Clock, Plus, Calendar, ArrowUpRight, AlertTriangle } from 'lucide-react'
 import {
   getAgeDisplay, getAgeDecimal, predictAdultHeight, predictHealthyWeight,
   getCurrentBMI, getBMIStatus, getHeightPercentile, getWeightPercentile,
   forecastShortTerm, getNutritionSummary
-} from '../hooks/useGrowth'
+} from './useGrowth'
 
 export default function ChildCard({ child, onUpdate, onDelete }) {
   const [editing, setEditing] = useState(false)
