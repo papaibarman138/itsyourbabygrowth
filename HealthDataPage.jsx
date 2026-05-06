@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { db } from '../lib/db'
+import { db } from './db'
 import { Activity, Ruler, Weight, TrendingUp, Heart, AlertCircle, AlertTriangle, Calendar, ArrowUpRight, Clock } from 'lucide-react'
 import {
   getAgeDisplay, getAgeDecimal, predictAdultHeight, predictHealthyWeight,
