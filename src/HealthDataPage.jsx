@@ -23,7 +23,7 @@ export default function HealthDataPage() {
 
   async function loadChildren() {
     try {
-      const data = await db.select('children', {}, { order: '-createdAt' })
+      const data = await db.getChildren()
       setChildren(data)
       if (data.length > 0) setSelected(data[0])
     } catch (e) {
@@ -35,8 +35,7 @@ export default function HealthDataPage() {
 
   async function loadMeasurements(childId) {
     try {
-      const data = await db.select('measurements', { childId }, { order: '-date', limit: 20 })
-      setMeasurements(data)
+      setMeasurements([])
     } catch (e) {
       console.error(e)
     }
