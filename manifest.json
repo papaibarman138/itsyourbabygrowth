@@ -1,1 +1,17 @@
 
+{
+  "name": "NutriTrack",
+  "short_name": "NutriTrack",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2bb3b1",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "https://www.image2url.com/r2/default/images/1777962641574-af94d91e-26aa-4e86-abfb-1cb457b36dd2.jpeg",
+      "sizes": "192x192",
+      "type": "image/png"
+    }
+  ]
+}
