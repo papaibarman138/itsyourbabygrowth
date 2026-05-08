@@ -20,7 +20,7 @@ export default function TrackPage() {
 
   async function loadChildren() {
     try {
-      const data = await db.select('children', {}, { order: '-createdAt' })
+      const data = await db.getChildren()
       setChildren(data)
       if (data.length > 0 && !selectedChild) {
         setSelectedChild(data[0])
