@@ -8,9 +8,6 @@ import {
 import AddChildModal from './AddChildModal'
 import ChildCard from './ChildCard'
 
-const HERO_IMG = 'https://api.whacka.app/storage/v1/object/public/app-images/projects/92e44335-0275-4f78-867a-53d164b5dc61/gen-a15acd51-1777205664717.png'
-const APP_LOGO = 'https://api.whacka.app/storage/v1/object/public/app-images/92e44335-0275-4f78-867a-53d164b5dc61/bc5b7753-0969-4763-b5ff-8adb7ecac4a4.jpeg'
-
 export default function TrackPage() {
   const [children, setChildren] = useState([])
   const [loading, setLoading] = useState(true)
@@ -86,7 +83,7 @@ export default function TrackPage() {
         <div className="bg-gradient-to-br from-primary/5 via-white to-secondary/5 px-5 pt-6 pb-4">
           <div className="relative rounded-2xl overflow-hidden mb-4 shadow-sm">
             <img
-              src={HERO_IMG}
+              src=""
               alt="NutriTrack"
               className="w-full h-40 object-cover"
               onError={(e) => { e.target.style.display = 'none' }}
@@ -94,7 +91,7 @@ export default function TrackPage() {
             <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
             <div className="absolute bottom-3 left-4 flex items-center gap-3">
               <img
-                src={APP_LOGO}
+                src=""
                 alt="NutriTrack Logo"
                 className="w-10 h-10 rounded-xl object-cover shadow-md border-2 border-white/80"
                 onError={(e) => { e.target.style.display = 'none' }}
