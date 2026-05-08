@@ -231,7 +231,7 @@ function AboutApp() {
                   Dr. Papai Barman
                 </p>
                 <p className="text-xs text-gray-500 mt-0.5">
-                  PhD, MPhil, Public Health Researcher
+                  MPhil, PhD, Public Health Researcher
                 </p>
               </div>
               <p className="text-[11px] text-gray-400 leading-relaxed border-t border-gray-100 pt-3">
