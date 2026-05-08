@@ -31,42 +31,65 @@ export default function TrackPage() {
       setLoading(false)
     }
   }
+async function handleAddChild(child) {
+  try {
+    const record = await db.saveChild(child)
 
-  async function handleAddChild(child) {
-    try {
-      const record = await db.insert('children', child)
-      const updated = [record, ...children]
-      setChildren(updated)
-      setSelectedChild(record)
-      setShowAdd(false)
-    } catch (e) {
-      console.error(e)
-    }
+    const updated = [record, ...children]
+
+    setChildren(updated)
+
+    setSelectedChild(record)
+
+    setShowAdd(false)
+  } catch (e) {
+    console.error(e)
   }
-
+}
   async function handleDeleteChild(id) {
-    try {
-      await db.delete('children', id)
-      const updated = children.filter(c => c.id !== id)
-      setChildren(updated)
-      if (selectedChild?.id === id) {
-        setSelectedChild(updated[0] || null)
-      }
-    } catch (e) {
-      console.error(e)
-    }
-  }
+  try {
+    await db.deleteChild(id)
 
-  async function handleUpdateMeasurement(id, height, weight) {
-    try {
-      const record = await db.update('children', id, { height, weight, lastMeasured: new Date().toISOString() })
-      const updated = children.map(c => c.id === id ? { ...c, height, weight, lastMeasured: record.lastMeasured } : c)
-      setChildren(updated)
-      setSelectedChild(prev => prev?.id === id ? { ...prev, height, weight, lastMeasured: record.lastMeasured } : prev)
-    } catch (e) {
-      console.error(e)
+    const updated = children.filter(c => c.id !== id)
+
+    setChildren(updated)
+
+    if (selectedChild?.id === id) {
+      setSelectedChild(updated[0] || null)
     }
+  } catch (e) {
+    console.error(e)
   }
+}
+
+  
+  async function handleUpdateMeasurement(id, height, weight) {
+  try {
+    const updated = children.map(c =>
+      c.id === id
+        ? {
+            ...c,
+            height,
+            weight,
+            lastMeasured: new Date().toISOString()
+          }
+        : c
+    )
+
+    setChildren(updated)
+
+    const selected = updated.find(c => c.id === id)
+
+    setSelectedChild(selected)
+
+    localStorage.setItem(
+      "baby_growth_children",
+      JSON.stringify(updated)
+    )
+  } catch (e) {
+    console.error(e)
+  }
+}
 
   if (loading) {
     return (
