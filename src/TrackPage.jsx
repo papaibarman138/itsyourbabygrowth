@@ -106,7 +106,7 @@ async function handleAddChild(child) {
         <div className="bg-gradient-to-br from-primary/5 via-white to-secondary/5 px-5 pt-6 pb-4">
           <div className="relative rounded-2xl overflow-hidden mb-4 shadow-sm">
             <img
-              src=""
+              src="https://www.image2url.com/r2/default/images/1777962641574-af94d91e-26aa-4e86-abfb-1cb457b36dd2.jpeg"
               alt="NutriTrack"
               className="w-full h-40 object-cover"
               onError={(e) => { e.target.style.display = 'none' }}
