@@ -114,7 +114,7 @@ async function handleAddChild(child) {
             <div className="absolute inset-0 bg-gradient-to-t from-white/60 to-transparent" />
             <div className="absolute bottom-3 left-4 flex items-center gap-3">
               <img
-                src=""
+                src="https://www.image2url.com/r2/default/images/1777962641574-af94d91e-26aa-4e86-abfb-1cb457b36dd2.jpeg"
                 alt="NutriTrack Logo"
                 className="w-10 h-10 rounded-xl object-cover shadow-md border-2 border-white/80"
                 onError={(e) => { e.target.style.display = 'none' }}
@@ -204,7 +204,7 @@ function AboutApp() {
           >
             <div className="flex justify-center mb-3">
               <img
-                src={APP_LOGO}
+                src="https://www.image2url.com/r2/default/images/1777962641574-af94d91e-26aa-4e86-abfb-1cb457b36dd2.jpeg"
                 alt="NutriTrack Logo"
                 className="w-16 h-16 rounded-2xl object-cover shadow-md"
                 onError={(e) => { e.target.style.display = 'none' }}
