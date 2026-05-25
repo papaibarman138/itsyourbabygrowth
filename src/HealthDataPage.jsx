@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { db } from './db'
 import { Activity, Ruler, Weight, TrendingUp, Heart, AlertCircle, AlertTriangle, Calendar, ArrowUpRight, Clock } from 'lucide-react'
 import {
-  getAgeDisplay, getAgeDecimal, predictAdultHeight, predictHealthyWeight,
+  getAgeDisplay, getAgeMonths, predictAdultHeight, predictHealthyWeight,
   getCurrentBMI, getBMIStatus, getHeightPercentile, getWeightPercentile,
   forecastShortTerm, getNutritionSummary
 } from './useGrowth'
@@ -62,7 +62,7 @@ export default function HealthDataPage() {
   }
 
   const child = selected
-  const ageYears = child ? getAgeDecimal(child.dob) : 0
+  const ageYears = child ? getAgeMonths(child.dob) : 0
   const ageDisplay = child ? getAgeDisplay(child.dob) : ''
   const adultHeight = child ? predictAdultHeight(child.gender, child.height, ageYears) : { low: 0, high: 0 }
   const healthyWeight = child ? predictHealthyWeight(child.gender, adultHeight) : { low: 0, high: 0 }
