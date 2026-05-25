@@ -29,10 +29,7 @@ export default function ChildCard({ child, onUpdate, onDelete }) {
   const isBoy = child.gender === 'boy'
   const nutrition = getNutritionSummary(child.gender, ageYears, child.height, child.weight)
 
-  // Load measurement history
-  useEffect(() => {
-    loadMeasurements()
-  }, [child.id])
+  
 
  async function loadMeasurements() {
   try {
@@ -41,12 +38,19 @@ export default function ChildCard({ child, onUpdate, onDelete }) {
     console.error(e)
   }
 }
-
+// Load measurement history
+useEffect(() => {
+  loadMeasurements()
+}, [child.id])
+  
   // Short-term forecast
   const allMeasurements = [
     ...measurements,
     ...(child.height || child.weight ? [{ date: child.lastMeasured || new Date().toISOString(), height: child.height, weight: child.weight }] : [])
   ]
+  allMeasurements.sort(
+  (a, b) => new Date(a.date) - new Date(b.date)
+)
   const forecast = forecastShortTerm(child.gender, child.dob, child.height, child.weight, allMeasurements)
 
   function handleSaveMeasurement() {
@@ -141,7 +145,9 @@ export default function ChildCard({ child, onUpdate, onDelete }) {
   // Get the last 3 months cutoff
   const threeMonthsAgo = new Date()
   threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
-  const recentMeasurements = measurements.filter(m => new Date(m.date) >= threeMonthsAgo)
+  const recentMeasurements = measurements.filter(
+  m => m.date && new Date(m.date) >= threeMonthsAgo
+)
 
   return (
     <div className="space-y-4 animate-fade-up">
