@@ -78,9 +78,7 @@ export default function HealthDataPage() {
   ]
   const forecast = child ? forecastShortTerm(child.gender, child.dob, child.height, child.weight, allMeasurements) : {}
 
-  const expectedAdultHeightMid = (adultHeight.low + adultHeight.high) / 2
-  const growthProgress = child?.height ? Math.round((child.height / expectedAdultHeightMid) * 100) : 0
-
+  
   return (
     <div className="pt-[env(safe-area-inset-top)] min-h-full">
       <div className="px-5 pt-6 pb-4">
@@ -202,31 +200,9 @@ export default function HealthDataPage() {
             </div>
           )}
 
-          {/* Growth Milestones */}
-          <div className="bg-white rounded-3xl p-5 shadow-sm border border-gray-50">
-            <h3 className="font-display text-sm font-bold text-gray-600 uppercase tracking-wider mb-4">
-              Growth Milestones
-            </h3>
-            <div className="space-y-4">
-              <Milestone label="Height Progress to Adult"
-                current={child.height || 0} target={expectedAdultHeightMid} unit="cm" isPrimary={true} />
-              <Milestone label="Weight Progress (Healthy Range)"
-                current={child.weight || 0} target={(healthyWeight.low + healthyWeight.high) / 2} unit="kg" isPrimary={false} />
-            </div>
-          </div>
+          
 
-          {/* Adult Forecast Summary */}
-          <div className={`bg-gradient-to-br ${isBoy ? 'from-blue-50 via-cyan-50 to-teal-50' : 'from-pink-50 via-purple-50 to-fuchsia-50'} rounded-3xl p-5`}>
-            <h3 className="font-display text-sm font-bold text-gray-600 uppercase tracking-wider mb-4">
-              Adult Forecast Summary
-            </h3>
-            <div className="space-y-3">
-              <ForecastRow label="Predicted Adult Height" value={`${adultHeight.low}–${adultHeight.high} cm`} />
-              <ForecastRow label="Healthy Adult Weight" value={`${healthyWeight.low}–${healthyWeight.high} kg`} />
-              <ForecastRow label="BMI Status (WHO)" value={bmiStatus ? `${bmiStatus.label} (z: ${bmiStatus.z})` : 'N/A'} />
-              {child.height && <ForecastRow label="Growth Completion" value={`${growthProgress}%`} />}
-            </div>
-          </div>
+        
 
           {/* Measurement History Count */}
           {measurements.length > 0 && (
@@ -270,33 +246,6 @@ function StatCard({ icon, label, value, sub, bg, iconColor, subColor }) {
   )
 }
 
-function Milestone({ label, current, target, unit, isPrimary }) {
-  const progress = target > 0 ? Math.min(100, Math.round((current / target) * 100)) : 0
-  return (
-    <div>
-      <div className="flex items-center justify-between mb-1.5">
-        <span className="text-xs font-semibold text-gray-500">{label}</span>
-        <span className="text-xs font-bold text-gray-600">{current || '—'} / {Math.round(target)} {unit}</span>
-      </div>
-      <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
-        <div className={`h-full rounded-full transition-all duration-700 ${isPrimary ? 'bg-primary' : 'bg-secondary'}`}
-          style={{ width: `${progress}%` }} />
-      </div>
-      <div className="flex justify-end mt-1">
-        <span className={`text-[10px] font-bold ${isPrimary ? 'text-primary' : 'text-secondary'}`}>{progress}%</span>
-      </div>
-    </div>
-  )
-}
-
-function ForecastRow({ label, value }) {
-  return (
-    <div className="flex items-center justify-between py-2 border-b border-white/50 last:border-b-0">
-      <span className="text-xs text-gray-500 font-medium">{label}</span>
-      <span className="font-bold text-sm text-gray-800">{value}</span>
-    </div>
-  )
-}
 
 function NutritionRow({ label, sublabel, status }) {
   const bgMap = {
