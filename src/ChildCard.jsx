@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { db } from './db'
 import { Ruler, Weight, Sparkles, TrendingUp, Trash2, Edit3, Check, X, Star, Clock, Plus, Calendar, ArrowUpRight, AlertTriangle } from 'lucide-react'
 import {
   getAgeDisplay, getAgeDecimal, predictAdultHeight, predictHealthyWeight,
@@ -35,14 +34,13 @@ export default function ChildCard({ child, onUpdate, onDelete }) {
     loadMeasurements()
   }, [child.id])
 
-  async function loadMeasurements() {
-    try {
-      const data = await db.select('measurements', { childId: child.id }, { order: '-date', limit: 20 })
-      setMeasurements(data)
-    } catch (e) {
-      console.error(e)
-    }
+ async function loadMeasurements() {
+  try {
+    setMeasurements(child.measurements || [])
+  } catch (e) {
+    console.error(e)
   }
+}
 
   // Short-term forecast
   const allMeasurements = [
@@ -58,37 +56,88 @@ export default function ChildCard({ child, onUpdate, onDelete }) {
     setEditing(false)
   }
 
-  async function handleAddHistory() {
-    if (!histDate || (!histHeight && !histWeight) || savingHist) return
-    setSavingHist(true)
-    try {
-      const record = await db.insert('measurements', {
-        childId: child.id,
-        date: histDate,
-        height: histHeight ? parseFloat(histHeight) : null,
-        weight: histWeight ? parseFloat(histWeight) : null,
-      })
-      setMeasurements(prev => [record, ...prev].sort((a, b) => new Date(b.date) - new Date(a.date)))
-      setHistDate('')
-      setHistHeight('')
-      setHistWeight('')
-      setShowAddHistory(false)
-    } catch (e) {
-      console.error(e)
-    } finally {
-      setSavingHist(false)
-    }
+ async function handleAddHistory() {
+  if (!histDate || (!histHeight && !histWeight) || savingHist) return
+
+  setSavingHist(true)
+
+  try {
+    const updatedChildren = JSON.parse(
+      localStorage.getItem("baby_growth_children")
+    ) || []
+
+    const updated = updatedChildren.map((c) => {
+      if (c.id === child.id) {
+        return {
+          ...c,
+          measurements: [
+            ...(c.measurements || []),
+            {
+              id: Date.now(),
+              date: histDate,
+              height: histHeight ? parseFloat(histHeight) : null,
+              weight: histWeight ? parseFloat(histWeight) : null,
+            },
+          ],
+        }
+      }
+
+      return c
+    })
+
+    localStorage.setItem(
+      "baby_growth_children",
+      JSON.stringify(updated)
+    )
+
+    const selected = updated.find(c => c.id === child.id)
+
+    setMeasurements(selected.measurements || [])
+
+    setHistDate('')
+    setHistHeight('')
+    setHistWeight('')
+    setShowAddHistory(false)
+
+  } catch (e) {
+    console.error(e)
+  } finally {
+    setSavingHist(false)
   }
+}
 
   async function handleDeleteMeasurement(id) {
-    try {
-      await db.delete('measurements', id)
-      setMeasurements(prev => prev.filter(m => m.id !== id))
-    } catch (e) {
-      console.error(e)
-    }
-  }
+  try {
+    const children = JSON.parse(
+      localStorage.getItem("baby_growth_children")
+    ) || []
 
+    const updated = children.map((c) => {
+      if (c.id === child.id) {
+        return {
+          ...c,
+          measurements: (c.measurements || []).filter(
+            (m) => m.id !== id
+          ),
+        }
+      }
+
+      return c
+    })
+
+    localStorage.setItem(
+      "baby_growth_children",
+      JSON.stringify(updated)
+    )
+
+    const selected = updated.find(c => c.id === child.id)
+
+    setMeasurements(selected.measurements || [])
+
+  } catch (e) {
+    console.error(e)
+  }
+}
   // Get the last 3 months cutoff
   const threeMonthsAgo = new Date()
   threeMonthsAgo.setMonth(threeMonthsAgo.getMonth() - 3)
