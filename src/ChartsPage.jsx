@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { db } from './db'
 import { BarChart3, Ruler, Weight, AlertTriangle } from 'lucide-react'
-import { getAgeDecimal, getGrowthCurve, getWHOBands } from './useGrowth'
+import { getAgeMonths, getGrowthCurve, getWHOBands } from './useGrowth'
 
 export default function ChartsPage() {
   const [children, setChildren] = useState([])
@@ -59,7 +59,7 @@ export default function ChartsPage() {
   }
 
   const curve = selected ? getGrowthCurve(selected.gender, chartType) : []
-  const currentAge = selected ? getAgeDecimal(selected.dob) : 0
+  const currentAge = selected ? getAgeMonths(selected.dob) : 0
   const currentValue = selected ? (chartType === 'height' ? selected.height : selected.weight) : null
 
   // Prepare child's data points for the chart (measurements + current)
