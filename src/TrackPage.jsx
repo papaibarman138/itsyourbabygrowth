@@ -2,8 +2,11 @@ import { useState, useEffect } from 'react'
 import { db } from './db'
 import { Plus, ChevronRight, Sparkles, Ruler, Weight, Baby, Trash2, Info, X } from 'lucide-react'
 import {
-  getAgeDisplay, getAgeDecimal, predictAdultHeight, predictHealthyWeight,
-  getCurrentBMI, getBMIStatus, getHeightPercentile, getWeightPercentile
+  getAgeDisplay,
+  getCurrentBMI,
+  getBMIStatus,
+  getHeightPercentile,
+  getWeightPercentile
 } from './useGrowth'
 import AddChildModal from './AddChildModal'
 import ChildCard from './ChildCard'
