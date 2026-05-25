@@ -59,7 +59,8 @@ export default function ChartsPage() {
   }
 
   const curve = selected ? getGrowthCurve(selected.gender, chartType) : []
-  const currentAge = selected ? getAgeMonths(selected.dob) : 0
+  const currentAgeMonths = selected ? getAgeMonths(selected.dob) : 0
+  const currentAge = currentAgeMonths / 12
   const currentValue = selected ? (chartType === 'height' ? selected.height : selected.weight) : null
 
   // Prepare child's data points for the chart (measurements + current)
