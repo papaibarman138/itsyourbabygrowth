@@ -1590,7 +1590,7 @@ export function getUnderweightStatus(
 
   if (!weight) return null
 
-  const ageMonths = getAgeInMonths(dob)
+  const ageMonths = getAgeMonths(dob)
 
   const lmsData =
     gender === 'boy'
