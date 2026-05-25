@@ -18,14 +18,14 @@ export default function ChildCard({ child, onUpdate, onDelete }) {
   const [histWeight, setHistWeight] = useState('')
   const [savingHist, setSavingHist] = useState(false)
 
-  const ageYears = getAgeMonths(child.dob)
+  const ageMonths = getAgeMonths(child.dob)
   const ageDisplay = getAgeDisplay(child.dob)
   const bmi = getCurrentBMI(child.height, child.weight)
-  const bmiStatus = getBMIStatus(bmi, ageYears, child.gender)
-  const heightPercentile = child.height ? getHeightPercentile(child.gender, ageYears, child.height) : null
-  const weightPercentile = child.weight ? getWeightPercentile(child.gender, ageYears, child.weight) : null
+  const bmiStatus = getBMIStatus(bmi, ageMonths, child.gender)
+  const heightPercentile = child.height ? getHeightPercentile(child.gender, ageMonths, child.height) : null
+  const weightPercentile = child.weight ? getWeightPercentile(child.gender, ageMonths, child.weight) : null
   const isBoy = child.gender === 'boy'
-  const nutrition = getNutritionSummary(child.gender, ageYears, child.height, child.weight)
+  const nutrition = getNutritionSummary(child.gender, ageMonths, child.height, child.weight)
 
   
 
