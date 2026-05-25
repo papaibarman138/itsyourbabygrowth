@@ -860,9 +860,9 @@ safeGrowth = Math.min(
       const curr = sorted[i]
 
       if (
-        prev.weight &&
-        curr.weight
-      ) {
+  prev.weight != null &&
+  curr.weight != null
+) {
 
         const monthDiff =
           (
@@ -1377,9 +1377,6 @@ export const WHZ_LMS_BOYS = [
   { length: 120.0, L: -0.3521, M: 22.3533, S: 0.09424 }
 
 ]
-
-]
-
 
 // ======================================================
 // WHO Weight-for-Height LMS Reference Data (GIRLS)
