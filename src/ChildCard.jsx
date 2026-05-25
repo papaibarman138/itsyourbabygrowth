@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Ruler, Weight, Sparkles, TrendingUp, Trash2, Edit3, Check, X, Star, Clock, Plus, Calendar, ArrowUpRight, AlertTriangle } from 'lucide-react'
 import {
-  getAgeDisplay, getAgeMonths, predictHealthyWeight,
+  getAgeDisplay, getAgeMonths,
   getCurrentBMI, getBMIStatus, getHeightPercentile, getWeightPercentile,
   forecastShortTerm, getNutritionSummary
 } from './useGrowth'
@@ -20,7 +20,6 @@ export default function ChildCard({ child, onUpdate, onDelete }) {
 
   const ageYears = getAgeMonths(child.dob)
   const ageDisplay = getAgeDisplay(child.dob)
-  const healthyWeight = predictHealthyWeight(child.gender, adultHeight)
   const bmi = getCurrentBMI(child.height, child.weight)
   const bmiStatus = getBMIStatus(bmi, ageYears, child.gender)
   const heightPercentile = child.height ? getHeightPercentile(child.gender, ageYears, child.height) : null
