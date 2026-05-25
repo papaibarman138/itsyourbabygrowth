@@ -434,49 +434,8 @@ useEffect(() => {
         )}
       </div>
 
-      {/* Adult Growth Prediction */}
-      <div className="bg-white rounded-3xl p-5 shadow-sm border border-gray-50">
-        <div className="flex items-center gap-2 mb-4">
-          <Sparkles size={16} className="text-amber-400" />
-          <h4 className="font-display text-sm font-bold text-gray-700 uppercase tracking-wider">Adult Forecast</h4>
-        </div>
-
-        <div className="grid grid-cols-2 gap-3">
-          <div className="bg-gradient-to-br from-primary/5 to-primary/10 rounded-2xl p-4 relative overflow-hidden">
-            <div className="absolute top-1 right-1 opacity-20">
-              <Star size={24} className="text-primary" />
-            </div>
-            <p className="text-[10px] font-bold text-primary/70 uppercase tracking-wider mb-1">Adult Height</p>
-            <p className="font-display text-2xl font-bold text-primary">{adultHeight.low}–{adultHeight.high}</p>
-            <p className="text-xs text-primary/60 font-semibold">cm</p>
-          </div>
-          <div className="bg-gradient-to-br from-secondary/5 to-secondary/10 rounded-2xl p-4 relative overflow-hidden">
-            <div className="absolute top-1 right-1 opacity-20">
-              <Star size={24} className="text-secondary" />
-            </div>
-            <p className="text-[10px] font-bold text-secondary/70 uppercase tracking-wider mb-1">Healthy Weight</p>
-            <p className="font-display text-2xl font-bold text-secondary">{healthyWeight.low}–{healthyWeight.high}</p>
-            <p className="text-xs text-secondary/60 font-semibold">kg</p>
-          </div>
-        </div>
-
-        {child.height && (
-          <div className="mt-4">
-            <div className="flex items-center justify-between mb-1.5">
-              <span className="text-xs font-semibold text-gray-400">Height Progress to Adult</span>
-              <span className="text-xs font-bold text-primary">{Math.round((child.height / ((adultHeight.low + adultHeight.high) / 2)) * 100)}%</span>
-            </div>
-            <div className="h-2.5 bg-gray-100 rounded-full overflow-hidden">
-              <div className="h-full bg-gradient-to-r from-primary to-secondary rounded-full transition-all duration-700"
-                style={{ width: `${Math.min(100, Math.round((child.height / ((adultHeight.low + adultHeight.high) / 2)) * 100))}%` }} />
-            </div>
-          </div>
-        )}
-
-        <p className="text-[10px] text-gray-300 mt-3 text-center">
-          Based on WHO growth standards. For reference only — consult your pediatrician.
-        </p>
-      </div>
+      
+        
 
       {/* Disclaimer */}
       <div className="bg-amber-50/80 rounded-2xl p-4 border border-amber-100">
