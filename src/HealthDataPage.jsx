@@ -62,15 +62,15 @@ export default function HealthDataPage() {
   }
 
   const child = selected
-  const ageYears = child ? getAgeMonths(child.dob) : 0
+  const ageMonths = child ? getAgeMonths(child.dob) : 0
   const ageDisplay = child ? getAgeDisplay(child.dob) : ''
   const bmi = child ? getCurrentBMI(child.height, child.weight) : null
-  const bmiStatus = bmi ? getBMIStatus(bmi, ageYears, child.gender) : null
-  const heightPerc = child?.height ? getHeightPercentile(child.gender, ageYears, child.height) : null
-  const weightPerc = child?.weight ? getWeightPercentile(child.gender, ageYears, child.weight) : null
+  const bmiStatus = bmi ? getBMIStatus(bmi, ageMonths, child.gender) : null
+  const heightPerc = child?.height ? getHeightPercentile(child.gender, ageMonths, child.height) : null
+  const weightPerc = child?.weight ? getWeightPercentile(child.gender, ageMonths, child.weight) : null
   const isBoy = child?.gender === 'boy'
 
-  const nutrition = child ? getNutritionSummary(child.gender, ageYears, child.height, child.weight) : {}
+  const nutrition = child ? getNutritionSummary(child.gender, ageMonths, child.height, child.weight) : {}
 
   const allMeasurements = [
     ...measurements,
@@ -122,7 +122,7 @@ export default function HealthDataPage() {
               subColor={bmiStatus?.color} />
             <StatCard icon={<Calendar size={18} />} label="Age"
               value={ageDisplay}
-              sub={`${Math.round(ageYears * 12)} months`}
+              sub={`${Math.round(ageMonths)} months`}
               bg="bg-blue-50" iconColor="text-blue-500" />
           </div>
 
