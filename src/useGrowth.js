@@ -1658,13 +1658,23 @@ export function getWastingStatus(gender, height, weight) {
 
 export function getNutritionSummary(gender, age, height, weight) {
   return {
-    stunting: getStuntingStatus(gender, dob, age, height),
+    stunting: getStuntingStatus(
+      gender,
+      age,
+      height
+    ),
+
     underweight: getUnderweightStatus(
-  gender,
-  dob,
-  weight
-),
-    wasting: getWastingStatus(gender, height, weight),
+      gender,
+      age,
+      weight
+    ),
+
+    wasting: getWastingStatus(
+      gender,
+      height,
+      weight
+    ),
   }
 }
 
