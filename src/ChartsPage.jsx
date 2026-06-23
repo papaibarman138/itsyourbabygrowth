@@ -250,7 +250,7 @@ function WHOGrowthChart({ gender, chartType, curve, currentAge, currentValue, da
   }
 
   const medianPath = ageSteps.map((a, i) => {
-    const val = curve.find(c => c.age === a)?.p50 ?? 0
+    const val = curve.find(c => c.month === a)?.p50 ?? 0
     return `${i === 0 ? 'M' : 'L'} ${x(a)} ${y(val)}`
   }).join(' ')
 
@@ -312,7 +312,7 @@ function WHOGrowthChart({ gender, chartType, curve, currentAge, currentValue, da
       ))}
 
       {/* Current position if no dataPoints match */}
-      {currentValue && currentAge <= 18 && dataPoints.length === 0 && (
+      {currentValue && currentAge <= 60 && dataPoints.length === 0 && (
         <>
           <circle cx={x(currentAge)} cy={y(currentValue)} r="5" fill="#f59e0b" stroke="white" strokeWidth="2" />
           <text x={x(currentAge)} y={y(currentValue) - 10} textAnchor="middle" fontSize="8" fill="#f59e0b" fontWeight="bold">
@@ -322,7 +322,7 @@ function WHOGrowthChart({ gender, chartType, curve, currentAge, currentValue, da
       )}
 
       {/* X axis labels */}
-      {[0, 3, 6, 9, 12, 15, 18].map(age => (
+      {[0, 12, 24, 36, 48, 60].map(age => (
         <text key={`xl-${age}`} x={x(age)} y={height - 6} textAnchor="middle" fontSize="8" fill="#999" fontWeight="500">
           {age}m
         </text>
