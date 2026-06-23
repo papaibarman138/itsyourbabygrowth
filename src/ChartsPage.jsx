@@ -60,7 +60,7 @@ export default function ChartsPage() {
 
   const curve = selected ? getGrowthCurve(selected.gender, chartType) : []
   const currentAgeMonths = selected ? getAgeMonths(selected.dob) : 0
-  const currentAge = currentAgeMonths / 12
+  const currentAge = currentAgeMonths
   const currentValue = selected ? (chartType === 'height' ? selected.height : selected.weight) : null
 
   // Prepare child's data points for the chart (measurements + current)
@@ -70,13 +70,13 @@ export default function ChartsPage() {
     const val = chartType === 'height' ? m.height : m.weight
     if (val) {
       const ageAtMeasurement = (new Date(m.date) - dobDate) / (365.25 * 24 * 60 * 60 * 1000)
-      if (ageAtMeasurement >= 0 && ageAtMeasurement <= 18) {
-        dataPoints.push({ age: ageAtMeasurement, value: val })
+      if (ageAtMeasurement >= 0 && ageAtMeasurement <= 5) {
+        dataPoints.push({ age: ageAtMeasurement * 12, value: val })
       }
     }
   })
   // Add current measurement if not already covered
-  if (currentValue && currentAge >= 0 && currentAge <= 18) {
+  if (currentValue && currentAge >= 0 && currentAge <= 60) {
     const alreadyHas = dataPoints.some(d => Math.abs(d.age - currentAge) < 0.01)
     if (!alreadyHas) {
       dataPoints.push({ age: currentAge, value: currentValue })
@@ -133,7 +133,7 @@ export default function ChartsPage() {
               WHO {chartType === 'height' ? 'Height' : 'Weight'} for Age
             </h3>
             <span className="text-[10px] font-semibold text-gray-300">
-              {selected?.gender === 'boy' ? 'Boys' : 'Girls'} 0–18y
+              {selected?.gender === 'boy' ? 'Boys' : 'Girls'} 0–60 Months
             </span>
           </div>
           <WHOGrowthChart
@@ -182,14 +182,14 @@ export default function ChartsPage() {
               <span className="flex-1 text-center">97th</span>
             </div>
             {curve.map((point, i) => {
-              const isNearAge = Math.abs(point.age - currentAge) < 0.75
+              const isNearAge = Math.abs(point.month - currentAgeMonths) < 1
               return (
                 <div key={i}
                   className={`flex items-center px-3 py-2 rounded-lg text-xs ${
                     isNearAge ? 'bg-primary/10' : i % 2 === 0 ? 'bg-gray-50/50' : ''
                   }`}>
                   <span className={`w-12 font-semibold ${isNearAge ? 'text-gray-800' : 'text-gray-500'}`}>
-                    {point.age < 1 ? `${Math.round(point.age * 12)}m` : `${point.age}y`}
+                    {point.month}m
                   </span>
                   <span className="flex-1 text-center text-gray-400">{point.p3}</span>
                   <span className="flex-1 text-center text-gray-500">{point.p15}</span>
@@ -233,7 +233,7 @@ function WHOGrowthChart({ gender, chartType, curve, currentAge, currentValue, da
   const height = 220
   const pad = { top: 15, right: 15, bottom: 28, left: 36 }
 
-  const maxAge = 18
+  const maxAge = 60
   const minVal = chartType === 'height' ? 40 : 0
   const maxVal = chartType === 'height' ? 200 : 85
 
@@ -241,11 +241,11 @@ function WHOGrowthChart({ gender, chartType, curve, currentAge, currentValue, da
   const y = (val) => height - pad.bottom - (((val - minVal) / (maxVal - minVal)) * (height - pad.top - pad.bottom))
 
   // Generate smooth band paths using interpolated values at each integer year + extra early points
-  const ageSteps = [0, 0.25, 0.5, 1, 1.5, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18]
+  const ageSteps = curve.map(p => p.month)
 
   function bandPath(lowField, highField) {
-    const forward = ageSteps.map(a => `${x(a)},${y(curve.find(c => c.age === a)?.[highField] ?? 0)}`)
-    const backward = [...ageSteps].reverse().map(a => `${x(a)},${y(curve.find(c => c.age === a)?.[lowField] ?? 0)}`)
+    const forward = ageSteps.map(a => `${x(a)},${y(curve.find(c => c.month === a)?.[highField] ?? 0)}`)
+    const backward = [...ageSteps].reverse().map(a => `${x(a)},${y(curve.find(c => c.month === a)?.[lowField] ?? 0)}`)
     return `M ${forward.join(' L ')} L ${backward.join(' L ')} Z`
   }
 
@@ -264,7 +264,7 @@ function WHOGrowthChart({ gender, chartType, curve, currentAge, currentValue, da
   return (
     <svg viewBox={`0 0 ${width} ${height}`} className="w-full">
       {/* Grid lines */}
-      {[0, 3, 6, 9, 12, 15, 18].map(age => (
+      {[0, 12, 24, 36, 48, 60].map(age => (
         <line key={`gx-${age}`} x1={x(age)} y1={pad.top} x2={x(age)} y2={height - pad.bottom}
           stroke="#f0f0f0" strokeWidth="0.5" />
       ))}
@@ -324,7 +324,7 @@ function WHOGrowthChart({ gender, chartType, curve, currentAge, currentValue, da
       {/* X axis labels */}
       {[0, 3, 6, 9, 12, 15, 18].map(age => (
         <text key={`xl-${age}`} x={x(age)} y={height - 6} textAnchor="middle" fontSize="8" fill="#999" fontWeight="500">
-          {age}y
+          {age}m
         </text>
       ))}
 
